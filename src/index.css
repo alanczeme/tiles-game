@@ -17,10 +17,11 @@ code {
   width: 50px;
   background: red;
   margin: 5px;
+  cursor: pointer;
 }
 
 .tile-container {
   justify-content: center;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
 }

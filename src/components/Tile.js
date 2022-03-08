@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Tile({tile}) {
 
+    // let [ selectedTile, setSelectedTile ] = useState([])
+
     return (
-        <div className="tile-button"></div>
+        <button style={{background: `${tile}`}} className="tile-button"></button>
     )
 }
 
