@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Tile from './Tile.js';
 
 function Board() {
+    
+    let [isClicked, setIsClicked] = useState(-1);
+  
     // Must have an even number of columns
     const number_of_columns = 6 
     const number_of_tiles = number_of_columns ** 2
@@ -31,9 +34,47 @@ function Board() {
     colors = shuffle(colors);
     // console.log(colors)
     
+    function handleClick(event) {
+        event.preventDefault();
+        setIsClicked(event.target.id)
+
+        // const cardId = event.target.id;
+        // const newFlipps = this.state.isSelected.slice();
+        // this.setState({
+        //     prevSelectedCard: this.state.shuffledCard[cardId],
+        //     prevCardId: cardId
+        // });
+
+        // if (newFlipps[cardId] === false) {
+        //   newFlipps[cardId] = !newFlipps[cardId];
+        //   this.setState(prevState => ({ 
+        //     isSelected: newFlipps,
+        //     clickCount: this.state.clickCount + 1
+        //   }));
+
+        //   if (this.state.clickCount === 2) {
+        //     this.setState({ clickCount: 1 });
+        //     const prevCardId = this.state.prevCardId;
+        //     const newCard = this.state.shuffledCard[cardId];
+        //     const previousCard = this.state.prevSelectedCard;
+
+        //     isCardMatch(previousCard, newCard, prevCardId, cardId);
+        //   }
+        // }
+    };
+
     return (
         <div className="tile-container">
-            {colors.map((tile, index) => <Tile key={index} tile={tile} />)}
+            {colors.map((tile, index) => 
+                    <Tile 
+                        key={index} 
+                        tile={tile} 
+                        id={index}
+                        isClicked={isClicked}
+                        handleClick={handleClick}
+                    />
+                )
+            }
         </div>
     )
 }

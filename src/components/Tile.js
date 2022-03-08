@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 
-function Tile({tile, isSelected, handleClick}) {
+function Tile({id, tile, isClicked, handleClick}) {
 
-    // let [ selectedTile, setSelectedTile ] = useState([])
+    // console.log(id, isClicked)
 
     return (
-        <button style={{background: `${tile}`}} className={`tile-button${tile.id !== -1 ? "" : " hide-tile"}`} onClick={handleClick}></button>
+        <button
+            id={id}
+            value={tile}
+            disabled={isClicked == id ? true : false}
+            style={{background: `${tile}`}}
+            className={`tile-button ${isClicked == id ? "selected" : ""} ${tile.id !== -1 ? "" : "hide-tile"}`} 
+            onClick={handleClick}>
+        </button>
     )
 }
 
