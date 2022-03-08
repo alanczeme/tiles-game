@@ -30,38 +30,7 @@ function Board() {
 
     colors = shuffle(colors);
     // console.log(colors)
-
-
-    // const [game, setGame] = useState([])
-    // const [selectedCount, setSelectedCount] = useState(0)
-    // const [selectedIndexes, setSelectedIndexes] = useState([])
-
-    // useEffect(() => {
-    //     const newGame = []
-    //     for (let i = 0; i < number_of_tiles / 2; i++) {
-    //       const firstOption = {
-    //         id: 2 * i,
-    //         colorId: i,
-    //         color: colors[i],
-    //         matched: false,
-    //       }
-    //       const secondOption = {
-    //         id: 2 * i + 1,
-    //         colorId: i,
-    //         color: colors[i],
-    //         matched: false,
-    //       }
     
-    //       newGame.push(firstOption)
-    //       newGame.push(secondOption)
-    //     }
-    
-    //     const shuffledGame = newGame.sort(() => Math.random() - 0.5)
-    //     setGame(shuffledGame)
-    //   }, [])
-    
-    
-
     return (
         <div className="tile-container">
             {colors.map((tile, index) => <Tile key={index} tile={tile} />)}
