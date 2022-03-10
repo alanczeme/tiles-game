@@ -20,7 +20,7 @@ code {
 .tile-button {
   height: 50px;
   width: 50px;
-  background: red;
+  /* background: red; */
   margin: 5px;
   cursor: pointer;
 }

@@ -5,20 +5,8 @@ function Board() {
     
     const [isClicked, setIsClicked] = useState(-1);
     const [colors, setColors] = useState([])
-
-    useEffect(() => {
-        let array = []
-        // Must have an even number of columns
-        const number_of_columns = 6 
-        const number_of_tiles = number_of_columns ** 2
-        for (let i = 0; i < number_of_tiles/2; i++) {
-            const randomColor = Math.floor(Math.random()*16777215).toString(16);
-            const randomColorHex = "#" + randomColor;
-            array.push(randomColorHex);
-            array.push(randomColorHex);
-        }
-        setColors(shuffle(array))
-    }, [])
+    const [selectedTileColor, setSelectedTileColor] = useState("no color")
+    // const []
 
     function shuffle(array) {
         let currentIndex = array.length,  randomIndex;
@@ -31,12 +19,44 @@ function Board() {
           [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
         return array;
-      }
+    }
+
+    // Creates the tiles board
+    useEffect(() => {
+        let array = []
+        // Must have an even number of columns
+        const number_of_columns = 6 
+        const number_of_tiles = number_of_columns ** 2
+        for (let i = 0; i < number_of_tiles/2; i++) {
+            const randomColor = Math.floor(Math.random()*16777215).toString(16);
+            const randomColorHex = "#" + randomColor.padStart(6, "0");
+            array.push(randomColorHex);
+            array.push(randomColorHex);
+        }
+        setColors(shuffle(array))
+    }, [])
+
+    function isMatch(secondSelectedTileColor) {
+        if (selectedTileColor === secondSelectedTileColor) {
+            console.log("same same")
+        }
+        else {
+            console.log("wrong")
+        }
+
+        setSelectedTileColor("no color");
+    }
     
     function handleClick(event) {
         event.preventDefault();
         setIsClicked(event.target.id)
+        setSelectedTileColor(event.target.value)
+        if (selectedTileColor !== "no color") {
+            isMatch(event.target.value) 
+        }
     };
+
+    // console.log(selectedTileColor)
 
     return (
         <div class="parent-container">
