@@ -14,7 +14,6 @@ function Header({ restartGame }) {
                 width="100px" 
                 height="100px"  
                 position="absolute"
-                alignItems= "center"
                 src={logo} 
                 atl="logo"/>
                 
