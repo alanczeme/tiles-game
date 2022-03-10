@@ -8,6 +8,7 @@ function Board() {
     const [selectedTileColor, setSelectedTileColor] = useState("no color")
     const [correctlyMatchedColors, setCorrectlyMatchedColors] = useState([])
     const [isRestart, setIsRestart] = useState(false)
+    const [score, setScore] = useState(0)
 
     function shuffle(array) {
         let currentIndex = array.length,  randomIndex;
@@ -46,11 +47,13 @@ function Board() {
     function isMatch(secondSelectedTileColor) {
         if (selectedTileColor === secondSelectedTileColor) {
             console.log("same same")
+            setScore(score+1)
             setCorrectlyMatchedColors([...correctlyMatchedColors, selectedTileColor])
         }
         else {
             console.log("wrong")
             setCorrectlyMatchedColors([])
+            setScore(0)
             setIsRestart(true)
         }
         
@@ -90,10 +93,8 @@ function Board() {
                 }
             </div>
             <div class="player-score">
-                <h1>Player: </h1>
-                <h1> Nathalia</h1>
-                <h2 class="score">Score: </h2>
-                <h2> 10000 </h2>
+                <h2 class="score">Score: {score}</h2>
+                <button>Save Score</button>
             </div>
         </div>
     )
