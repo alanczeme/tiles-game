@@ -9,13 +9,15 @@ function Header({ restartGame }) {
             <div className="justify-end">
                 <button onClick={restartGame} className="restart-button">Restart Game</button>
             </div>
-            <div>
+            <div id="logo">
                 <img className="logo" 
                 width="100px" 
                 height="100px"  
+                position="absolute"
                 alignItems= "center"
                 src={logo} 
                 atl="logo"/>
+                
             </div>
         </div>
     )

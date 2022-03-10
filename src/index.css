@@ -34,7 +34,7 @@ code {
 }
 
 .parent-container {
-  padding-left: 20%;
+  padding-left: 10%;
 }
 
 
@@ -50,4 +50,9 @@ code {
 .selected {
   border: 10px solid blue;
   cursor: default;
+}
+
+#logo {
+  display: flex;
+  justify-content: center;
 }
