@@ -20,7 +20,7 @@ code {
 .tile-button {
   height: 50px;
   width: 50px;
-  background: red;
+  /* background: red; */
   margin: 5px;
   cursor: pointer;
 }
@@ -49,6 +49,11 @@ code {
 
 .selected {
   border: 10px solid blue;
+  cursor: default;
+}
+
+.hide-tile {
+  opacity: 0.1;
   cursor: default;
 }
 
