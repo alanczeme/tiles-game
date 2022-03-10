@@ -52,6 +52,11 @@ code {
   cursor: default;
 }
 
+.hide-tile {
+  opacity: 0.1;
+  cursor: default;
+}
+
 #logo {
   display: flex;
   justify-content: center;

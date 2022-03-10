@@ -6,7 +6,8 @@ function Board() {
     const [isClicked, setIsClicked] = useState(-1);
     const [colors, setColors] = useState([])
     const [selectedTileColor, setSelectedTileColor] = useState("no color")
-    // const []
+    const [correctlyMatchedColors, setCorrectlyMatchedColors] = useState([])
+    const [isRestart, setIsRestart] = useState(false)
 
     function shuffle(array) {
         let currentIndex = array.length,  randomIndex;
@@ -19,6 +20,11 @@ function Board() {
           [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
         return array;
+    }
+
+    function restartGame() {
+        console.log("restart")
+        setIsRestart(true)
     }
 
     // Creates the tiles board
@@ -34,16 +40,21 @@ function Board() {
             array.push(randomColorHex);
         }
         setColors(shuffle(array))
-    }, [])
+        setIsRestart(false)
+    }, [isRestart])
 
     function isMatch(secondSelectedTileColor) {
         if (selectedTileColor === secondSelectedTileColor) {
             console.log("same same")
+            setCorrectlyMatchedColors([...correctlyMatchedColors, selectedTileColor])
         }
         else {
             console.log("wrong")
+            setCorrectlyMatchedColors([])
+            setIsRestart(true)
         }
-
+        
+        setIsClicked(-1)
         setSelectedTileColor("no color");
     }
     
@@ -56,10 +67,15 @@ function Board() {
         }
     };
 
-    // console.log(selectedTileColor)
+    console.log(correctlyMatchedColors)
+    // console.log(is)
+
 
     return (
         <div class="parent-container">
+            <div className="justify-end">
+                <button onClick={restartGame} className="restart-button">Restart Game</button>
+            </div>  
             <div className="tile-container">
                 {colors.map((tile, index) => 
                         <Tile 
@@ -68,6 +84,7 @@ function Board() {
                             id={index}
                             isClicked={isClicked}
                             handleClick={handleClick}
+                            correctlyMatchedColors={correctlyMatchedColors}
                         />
                     )
                 }
