@@ -39,17 +39,25 @@ function Board() {
     };
 
     return (
-        <div className="tile-container">
-            {colors.map((tile, index) => 
-                    <Tile 
-                        key={index} 
-                        tile={tile} 
-                        id={index}
-                        isClicked={isClicked}
-                        handleClick={handleClick}
-                    />
-                )
-            }
+        <div class="parent-container">
+            <div className="tile-container">
+                {colors.map((tile, index) => 
+                        <Tile 
+                            key={index} 
+                            tile={tile} 
+                            id={index}
+                            isClicked={isClicked}
+                            handleClick={handleClick}
+                        />
+                    )
+                }
+            </div>
+            <div class="player-score">
+                <h1>Player: </h1>
+                <h1> Nathalia</h1>
+                <h2 class="score">Score: </h2>
+                <h2> 10000 </h2>
+            </div>
         </div>
     )
 }
