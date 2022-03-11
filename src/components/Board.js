@@ -122,6 +122,8 @@ function Board() {
         .then(data =>{
             console.log(data)
         })
+
+        setInputName("")
     }
 
     return (
