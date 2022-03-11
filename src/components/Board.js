@@ -9,6 +9,8 @@ function Board() {
     const [correctlyMatchedColors, setCorrectlyMatchedColors] = useState([])
     const [isRestart, setIsRestart] = useState(false)
     const [score, setScore] = useState(0)
+    const [inputName, setInputName] = useState("")
+    const [scores, setScores] = useState([])
 
     function shuffle(array) {
         let currentIndex = array.length,  randomIndex;
@@ -21,11 +23,6 @@ function Board() {
           [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
         return array;
-    }
-
-    function restartGame() {
-        console.log("restart")
-        setIsRestart(true)
     }
 
     // Creates the tiles board
@@ -46,21 +43,33 @@ function Board() {
 
     function isMatch(secondSelectedTileColor) {
         if (selectedTileColor === secondSelectedTileColor) {
-            console.log("same same")
+            // console.log("same same")
             setScore(score+1)
             setCorrectlyMatchedColors([...correctlyMatchedColors, selectedTileColor])
         }
         else {
-            console.log("wrong")
-            setCorrectlyMatchedColors([])
-            setScore(0)
-            setIsRestart(true)
+            // console.log("wrong")
+            saveAndRestart();
         }
         
         setIsClicked(-1)
         setSelectedTileColor("no color");
     }
+
+    function saveAndRestart() {
+        setCorrectlyMatchedColors([])
+        restartGame()
+        // setScore(0)
+        // setIsRestart(true)
+    }
     
+    function restartGame() {
+        // console.log("restart")
+        setIsRestart(true)
+        // setCorrectlyMatchedColors([])
+        setScore(0)
+    }
+
     function handleClick(event) {
         event.preventDefault();
         setIsClicked(event.target.id)
@@ -70,31 +79,101 @@ function Board() {
         }
     };
 
-    console.log(correctlyMatchedColors)
-    // console.log(is)
+    
+    const scores_table_rows = scores.map((score, index) => {
+        return (
+        <tr>
+            <td>{index + 1}</td>
+            <td>{score.player_name}</td>
+            <td>{score.score}</td>
+        </tr>
+        )
+    })
 
+    useEffect(() => {
+        async function fetchData() {
+          let request_scores = await fetch("http://localhost:9292/scores/top")
+          let response_scores = await request_scores.json()
+          setScores(response_scores)
+          // console.log(response_scores)
+          
+          // request = await fetch("http://localhost:9292/player")
+          // response = await request.json()
+          // setPlayer(response)
+          // console.log(response)
+        }
+        fetchData()
+    }, [])
+
+
+    function saveScore(event) {
+        event.preventDefault();
+        // console.log(inputName)
+        console.log(127)
+        console.log(score)
+
+        fetch("http://localhost:9292/scores",{
+          method: "POST",
+          header: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            score: score,
+            created_at: (new Date().getMonth()+1)+'/'+new Date().getDate()+'/'+new Date().getFullYear() + " " +
+                          new Date().getHours() + ":" + String(new Date().getMinutes()).padStart(2, '0'),
+            player_id: 127
+          })
+        })
+        .then(resp => resp.json()) 
+        .then(data => console.log(data))
+    }
 
     return (
-        <div class="parent-container">
-            <div className="justify-end">
-                <button onClick={restartGame} className="restart-button">Restart Game</button>
-            </div>  
-            <div className="tile-container">
-                {colors.map((tile, index) => 
-                        <Tile 
-                            key={index} 
-                            tile={tile} 
-                            id={index}
-                            isClicked={isClicked}
-                            handleClick={handleClick}
-                            correctlyMatchedColors={correctlyMatchedColors}
-                        />
-                    )
-                }
+        <div className="parent-container">
+            <div>
+                <div className="tile-container">
+                    {colors.map((tile, index) => 
+                            <Tile 
+                                key={index} 
+                                tile={tile} 
+                                id={index}
+                                isClicked={isClicked}
+                                handleClick={handleClick}
+                                correctlyMatchedColors={correctlyMatchedColors}
+                            />
+                        )
+                    }
+                </div>
+                <div className="player-score">
+                    <h2 className="score">Score: {score}</h2>
+                    Enter Name: 
+                    <div>
+                        <form onSubmit={saveScore}>
+                            <input type="text" className="" value={inputName} onChange={(event) => {setInputName(event.target.value)}}></input>
+                            <div className="button">
+                                <input type="submit" className="" value="Save Score"></input>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="button">
+                        <button onClick={restartGame} className="restart-button">Restart Game</button>
+                    </div>  
+                </div>
             </div>
-            <div class="player-score">
-                <h2 class="score">Score: {score}</h2>
-                <button>Save Score</button>
+            <div className="table">
+                <h3>Top Scores</h3>
+                <table id="scores-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {scores_table_rows}
+                    </tbody>
+                </table>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../images/logo.png' 
 
-function Header({ restartGame }) {
+function Header() {
     return ( 
         <div className="grid-header-container">
             <div className="justify-left timer"></div>

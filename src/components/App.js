@@ -7,22 +7,7 @@ import GameOver from './GameOver.js';
 
 
 function App() {
-  const [scores, setScores] = useState([])
   const [player, setPlayer] = useState([])
-
-  useEffect(() => {
-    async function fetchData() {
-      let request = await fetch("http://localhost:9292/scores")
-      let response = await request.json()
-      setScores(response)
-      console.log(response)
-      request = await fetch("http://localhost:9292/player")
-      response = await request.json()
-      setPlayer(response)
-      console.log(response)
-    }
-    fetchData()
-  }, [])
 
   return (
     <div>
