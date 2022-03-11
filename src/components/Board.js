@@ -108,24 +108,20 @@ function Board() {
 
     function saveScore(event) {
         event.preventDefault();
-        // console.log(inputName)
-        console.log(127)
-        console.log(score)
-
         fetch("http://localhost:9292/scores",{
           method: "POST",
-          header: {
+          headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
             score: score,
-            created_at: (new Date().getMonth()+1)+'/'+new Date().getDate()+'/'+new Date().getFullYear() + " " +
-                          new Date().getHours() + ":" + String(new Date().getMinutes()).padStart(2, '0'),
             player_id: 127
           })
         })
         .then(resp => resp.json()) 
-        .then(data => console.log(data))
+        .then(data =>{
+            console.log(data)
+        })
     }
 
     return (
